@@ -134,3 +134,14 @@ async function loadMore() {
 }
 
 curatedPhotos();
+
+
+// ityped library
+window.ityped.init(document.querySelector('.search-input') ,{
+    strings: ['Search here . . .', 'eg cars . . .', 'eg Dogs . . .' ],
+    loop: true,
+    placeholder: true,
+    typeSpeed:  150,
+    startDelay: 2000,
+    showCursor: false,
+})
