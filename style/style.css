@@ -1,0 +1,219 @@
+/* font family */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap');
+
+/* font-family: 'Roboto', sans-serif; */
+
+/* css reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --body-background:#EAECDD;
+    --header-background: #f6f7f0;
+    --h1-title-color : rgb(8 126 164) ;   
+    --input-font-color : black;
+    --input-background-color : #d2d3cf;
+    --text-color: rgb(8 126 164);
+    --btn-background : rgb(8 126 164);
+    --btn-font-color: white;
+}
+
+.dark-theme {
+    --body-background: #343A46;
+    --header-background: #23272F;
+    --h1-title-color : #F6F7F9 ;
+    --btn-background : white;
+    --input-font-color : white;
+    --input-background-color : #343A46;
+    --text-color : white;
+    --btn-font-color : #23272F;
+}
+
+p  {
+    color: var(--text-color);
+}
+
+.icon-tabler  {
+    stroke: var(--text-color);
+}
+
+body {
+    font-family: 'Roboto', sans-serif; 
+    background-color: var(--body-background);
+}
+
+
+
+/* top navbar */
+header {
+    width: 100%;
+    background-color: var(--header-background);
+    box-shadow: rgba(0, 0, 0, 0.07) 0px 1px 2px, rgba(0, 0, 0, 0.07) 0px 2px 4px, rgba(0, 0, 0, 0.07) 0px 4px 8px, rgba(0, 0, 0, 0.07) 0px 8px 16px, rgba(0, 0, 0, 0.07) 0px 16px 32px, rgba(0, 0, 0, 0.07) 0px 32px 64px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 0.5rem;
+    min-height: 10rem;
+}
+
+nav {
+    min-height: 4rem;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    padding: 1rem 2rem 0rem 2rem;
+}
+
+.logo-img {
+    height: 100%;
+    cursor: pointer;
+    min-width: 3.5rem;
+    max-width: 6rem;
+    aspect-ratio: inherit;
+    width: 10%;
+}
+
+.navbar-title {
+    color: var(--h1-title-color);
+    font-size: 2rem;
+    letter-spacing: 5px;
+    text-align: center;
+    width: 80%;
+}
+
+/* top navbar ends here */
+
+#logo {
+    text-decoration: none;
+    color: black;
+}
+
+.search-form {
+    padding: 1rem;
+    display: flex;
+    width: 50%;
+    min-width:fit-content;
+}
+
+.search-form input {
+    font-size: 1.3rem;
+    padding: 0.5rem ;
+    width: 100%;
+    border: none;
+    /* border:2px solid var(--btn-background); */
+    outline:none;
+    background: var(--input-background-color);
+    color: var(--input-font-color);
+}
+
+.search-form button {
+    border: none;
+    padding: 0.5rem;
+    font-size: 1rem;
+    background-color:var(--btn-background) ;
+    cursor: pointer;
+    color: var(--btn-font-color);
+}
+
+.gallery-info {
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
+   color: gray;
+   padding: 0.5rem 0rem;
+}
+
+.gallery-info a {
+    color: var(--text-color);
+}
+
+.gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    padding: 2rem 0rem;
+    width: 80%;
+    margin: auto;
+    row-gap: 3rem;
+    column-gap: 2rem;
+}
+
+.gallery-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.nav-button {
+    min-height: 30vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.more {
+    padding: 1rem 3rem;
+    background-color: var(--btn-background);
+    color: var(--btn-font-color);
+    border: none;
+    font-size: 1.2rem;
+    cursor: pointer;
+}
+
+
+.dark-light-mode {
+    cursor: pointer;
+    background-color: var(--body-background);
+    outline: none;
+    border: none;
+    margin: auto;
+}
+.darkmode {
+    display: none;
+}
+
+.enable-dark-mode .lightmode {
+    display: none;
+}
+.enable-dark-mode .darkmode {
+    display: flex;
+}
+
+.Warning-text {
+    font-size: 1.5rem;
+    grid-column: span 4;
+}
+
+.warning-red {
+    color: red;
+}
+
+
+
+@media screen  and (max-width : 450px){
+    nav {
+        padding: 0.8rem 1rem 0rem 0.8rem;
+    }
+
+    .navbar-title {
+       font-size: 1.5rem;
+       letter-spacing: 2px;
+       padding: 0rem 1rem;
+    }
+
+    .search-form input {
+        font-size: 1rem;
+        padding: 0.35rem ;
+    }
+
+    .icon-tabler {
+        width: 2rem;
+    }
+
+    .more {
+        padding: 0.8rem 2rem;
+    }
+    
+}

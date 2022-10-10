@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+     <!-- favicons  -->
+     <link rel="apple-touch-icon" sizes="180x180" href="./favicons/apple-touch-icon.png" />
+     <link rel="icon" type="image/png" sizes="32x32" href="./favicons/favicon-32x32.png" />
+     <link rel="icon" type="image/png" sizes="16x16" href="./favicons/favicon-16x16.png" />
+     <link rel="manifest" href="./favicons/site.webmanifest" />
+     <!-- favicons ends here -->
+     
+     <!-- font awesome -->
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+     <!-- font awesome end-->
+
+    <link rel="stylesheet" href="./style/style.css">
+   <script src="./app js/app.js" defer ></script>
+    <title>Pexel Photos</title>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+         <!-- header navbar  -->
+        <nav>
+         <img src="./Logo/png/blue theme.png" class="logo-img" alt="my-logo">
+         <h1 class="navbar-title">Pexels Api</h1>
+         <button class="dark-light-mode">
+            <div class="darkmode">
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-sun" width="44" height="44" viewBox="0 0 24 24" stroke-width="1.5"  fill="none" stroke-linecap="round" stroke-linejoin="round">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                    <circle cx="12" cy="12" r="4" />
+                    <path d="M3 12h1m8 -9v1m8 8h1m-9 8v1m-6.4 -15.4l.7 .7m12.1 -.7l-.7 .7m0 11.4l.7 .7m-12.1 -.7l-.7 .7" />
+                  </svg>
+            </div>
+            <div class="lightmode">
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-moon-stars" width="44" height="44" viewBox="0 0 24 24" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                    <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+                    <path d="M17 4a2 2 0 0 0 2 2a2 2 0 0 0 -2 2a2 2 0 0 0 -2 -2a2 2 0 0 0 2 -2" />
+                    <path d="M19 11h2m-1 -1v2" />
+                  </svg>
+            </div>
+         </button>
+        </nav>
+      <!-- header navbar ends here -->
+        <form class="search-form"><input type="text" class="search-input" placeholder="search here ...">
+        <button type="submit" class="submit-btn">search</button>
+       </form>
+    </header>
+    <!-- main -->
+    <main>
+        <div class="gallery"></div>
+    </main>
+    <div class="nav-button">
+        <button class="more">more</button>
+    </div>
+</body>
+</html>
