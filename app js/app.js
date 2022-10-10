@@ -138,7 +138,7 @@ curatedPhotos();
 
 // ityped library
 window.ityped.init(document.querySelector('.search-input') ,{
-    strings: ['Search here . . .', 'eg cars . . .', 'eg Dogs . . .' ],
+    strings: ['Search here . . .', ' Lamborgini . . .', ' Dianosor . . .', 'babies . . .' ],
     loop: true,
     placeholder: true,
     typeSpeed:  150,
