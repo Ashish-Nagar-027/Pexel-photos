@@ -17,18 +17,19 @@ let loading;
 
 // light dark mode
 mode.addEventListener('click', (e)=> {
-    // console.log( e.currentTarget)
-    e.currentTarget.classList.toggle('enable-dark-mode')
 
-    document.documentElement.classList.toggle('dark-theme')
-    
-    if(e.currentTarget.classList.contains('enable-dark-mode')){
-        myLogo.src = './Logo/png/white-logo.png'
-    }
-    else{
+    if (e.currentTarget.classList.contains('enable-dark-mode')) {
         myLogo.src = './Logo/png/blue theme.png'
+        e.currentTarget.classList.remove('enable-dark-mode')
+        document.documentElement.classList.remove('dark-theme')
+    }
+    else {
+        myLogo.src = './Logo/png/white-logo.png'
+        e.currentTarget.classList.add('enable-dark-mode')
+        document.documentElement.classList.add('dark-theme')
     }
 })
+
 
 // Event Listners
 searchInput.addEventListener('input', updateInput);
@@ -63,8 +64,20 @@ async function fetchApi(url) {
            const data = await dataFetch.json();
            return data;
     } catch (error) {
-        gallery.innerHTML = `<p class="Warning-text"> <span class="warning-red">Warning :</span> Looks like Api Requests have reached to end for this hour .Try after  few hours.
-         <br/><p>`
+        try {
+            const dataFetch = await fetch(url, {
+                method: 'GET' ,
+                headers : {
+                    Accept : 'application/json',
+                    Authorization : auth
+                }
+               });
+               const data = await dataFetch.json();
+               return data;
+        } catch (error) {
+            gallery.innerHTML = `<p class="Warning-text"> <span class="warning-red">Warning :</span> Looks like Api Requests have reached to end for this hour .Try after  few hours.
+             <br/><p>`
+        }
     }
   
 }
