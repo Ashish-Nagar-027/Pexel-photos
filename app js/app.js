@@ -39,20 +39,24 @@ form.addEventListener('submit', (e) => {
     searchPhotos(searchValue);
 })
 
+// load button
 more.addEventListener('click', loadMore)
 
-
+// 
 function updateInput(e) {
     searchValue = e.target.value
 }
 
+
+// fetching data from api
 async function fetchApi(url) {
+    // fetching  data text ...
     loading = document.createElement('div')
     loading.innerHTML = `<p class="Warning-text">  
     Fetching data . . .<p>`
-
     gallery.appendChild(loading)
 
+    // Handling api
     try {
         const dataFetch = await fetch(url, {
             method: 'GET' ,
@@ -79,13 +83,12 @@ async function fetchApi(url) {
              <br/><p>`
         }
     }
-  
 }
 
+// generate photos,and data  from api data
 function generatePictures(data){
-
+    // removing loading text
     gallery.removeChild(loading)
-
     data.photos.forEach(photo => {
         const  galleryImg = document.createElement("div")
         galleryImg.classList.add('gallery-img');
@@ -98,16 +101,16 @@ function generatePictures(data){
         `
         gallery.appendChild(galleryImg);
     })
-
 }
+
 
 async function curatedPhotos() {
    fetchLink = "https://api.pexels.com/v1/curated?page=1&per_page=8"
    const data = await fetchApi(fetchLink);
    generatePictures(data)
-    
 }
 
+// handling search api
 async function searchPhotos(query){
      clear() 
      fetchLink = `https://api.pexels.com/v1/search?query=${query}&per_page=8`
