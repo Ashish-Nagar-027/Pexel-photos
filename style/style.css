@@ -19,6 +19,7 @@
     --text-color: rgb(8 126 164);
     --btn-background : rgb(8 126 164);
     --btn-font-color: white;
+    --hover-color: #b6b9ad
 }
 
 .dark-theme {
@@ -30,11 +31,13 @@
     --input-background-color : #343A46;
     --text-color : white;
     --btn-font-color : #23272F;
+    --hover-color : #444954
 }
 
 p  {
     color: var(--text-color);
 }
+
 
 .icon-tabler  {
     stroke: var(--text-color);
@@ -76,12 +79,19 @@ nav {
     width: 10%;
 }
 
+
+
 .navbar-title {
     color: var(--h1-title-color);
     font-size: 2rem;
     letter-spacing: 5px;
     text-align: center;
     width: 80%;
+    
+}
+
+.title-logo-text {
+    cursor: pointer;
 }
 
 /* top navbar ends here */
@@ -118,6 +128,36 @@ nav {
     color: var(--btn-font-color);
 }
 
+.your-favorite {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--input-background-color);
+}
+
+.your-favorite div {
+   color: var(--text-color);
+   font-size: 1.3rem;
+   font-weight: 500;
+   flex:1;
+   text-align: center;
+   padding: 1rem 2rem;
+   border: 1px solid var(--header-background);
+}
+
+.your-favorite div:hover{
+    background-color: var(--hover-color);
+}
+
+.your-favorite div span {
+    cursor: pointer;
+
+}
+.your-favorite div span:hover {
+    text-decoration: underline;
+}
+
 .gallery-info {
    display: flex;
    justify-content: space-between;
@@ -144,6 +184,20 @@ nav {
     width: 100%;
     height: 100%;
     object-fit: cover;
+}
+
+.image-div {
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+.fa-heart {
+    position: absolute;
+    top: 10px ;
+    left: 10px;
+    font-size: 2rem;
+    color: var(--h1-title-color);
+    cursor: pointer;
 }
 
 .nav-button {
@@ -183,7 +237,8 @@ nav {
 
 .Warning-text {
     font-size: 1.5rem;
-    grid-column: span 4;
+    grid-column: span 3;
+    display: block;
 }
 
 .warning-red {
