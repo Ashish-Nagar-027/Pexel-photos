@@ -7,7 +7,9 @@ const mode = document.querySelector(".dark-light-mode");
 const hertImg = document.querySelectorAll(".fa-heart");
 const yourFav = document.querySelector(".your-fav");
 const homeTab = document.querySelector(".home-button");
+const favoritesNum = document.querySelector(".fav-num");
 const yourFavoritesNav = document.querySelector(".your-favorite");
+const favoriteWarning = document.querySelector(".fav-add-removed-warning");
 let favorite = [];
 
 let FavTab = false;
@@ -30,7 +32,7 @@ yourFavoritesNav.addEventListener("click", (e) => {
       more.style.display = "flex";
     }
   }
-  if (e.target.textContent === "Favorites") {
+  if (e.target.textContent === `Favorites  ( ${favorite.length} )`) {
     FavTab = true;
     if (FavTab) {
       yourFav.style.backgroundColor = "var(--hover-color)";
@@ -132,6 +134,7 @@ async function fetchApi(url) {
 function generatePictures(data) {
   // updating favorites
   getFromLocal();
+  getFavNumber()
   data.photos.forEach((photo) => {
     // checking favorite
     function addFavoriteClass() {
@@ -220,6 +223,7 @@ window.ityped.init(document.querySelector(".search-input"), {
 
 let saveToLocal = () => {
   localStorage.setItem("favorite", JSON.stringify(favorite));
+  getFavNumber()
 };
 
 function getFromLocal() {
@@ -228,6 +232,7 @@ function getFromLocal() {
   } else {
     favorite = JSON.parse(localStorage.getItem("favorite"));
   }
+  getFavNumber()
 }
 
 const addFav = (event, originalPhoto, largePhoto, photographer) => {
@@ -240,6 +245,8 @@ const addFav = (event, originalPhoto, largePhoto, photographer) => {
   //
   if (event.target.classList.contains("fa-regular")) {
     event.target.classList.replace("fa-regular", "fa-solid");
+    showFavWarning('Added !')
+  //  checking if already availabe
     if (
       !favorite.find(
         (photoValues) => photoValues.originalPhoto === originalPhoto
@@ -253,6 +260,7 @@ const addFav = (event, originalPhoto, largePhoto, photographer) => {
     let indexItem = favorite.findIndex(
       (photoValues) => photoValues.originalPhoto === originalPhoto
     );
+    showFavWarning('Will be Removed !')
     favorite.splice(indexItem, 1);
     saveToLocal();
   }
@@ -261,9 +269,10 @@ const addFav = (event, originalPhoto, largePhoto, photographer) => {
 function generatePicturesFromLocal() {
   clear();
   more.style.display = "none";
-
+  
   // updating favorites
   getFromLocal();
+  getFavNumber()
   if (favorite.length > 0) {
     favorite.forEach((photo) => {
       const galleryImg = document.createElement("div");
@@ -286,5 +295,15 @@ function generatePicturesFromLocal() {
   }
 }
 
+function getFavNumber() {
+  favoritesNum.innerHTML = `<p>( ${favorite.length} )</P>`
+}
 
-// image hover effect
+// showing warning
+function showFavWarning(addedOrRemoved) {
+  favoriteWarning.style.display = 'flex'
+  favoriteWarning.textContent = addedOrRemoved;
+  setTimeout(() => {
+    favoriteWarning.style.display = 'none'
+  }, 1000);
+}

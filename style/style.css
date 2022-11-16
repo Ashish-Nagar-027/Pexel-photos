@@ -152,6 +152,9 @@ nav {
 
 .your-favorite div span {
     cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
 }
 .your-favorite div span:hover {
@@ -257,6 +260,16 @@ nav {
     color: red;
 }
 
+.fav-add-removed-warning {
+    position: fixed;
+   bottom: 3rem;
+   right: 2.5rem;
+   font-size: 2rem;
+   padding: 0.5rem 1rem;
+   background-color: var(--h1-title-color);
+   color: var( --body-background);
+   display: none;
+}
 
 @media screen  and (max-width : 450px){
     nav {
@@ -281,5 +294,25 @@ nav {
     .more {
         padding: 0.8rem 2rem;
     }
+
+    .gallery {
+        grid-gap: 4rem 1rem;
+    }
+
+    .fav-add-removed-warning {
+       
+       bottom: 2rem;
+       right: 1.5rem;
+       font-size: 1.5rem;
+       padding: 0.3rem 0.8rem;
+       background-color: var(--h1-title-color);
+       color: var( --body-background);
+    }
+
+    .your-favorite div {
+        font-size: 1.2rem;
+        padding:  0.8rem 0.4rem;
+    }
+
     
 }
