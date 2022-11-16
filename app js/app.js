@@ -121,7 +121,7 @@ async function fetchApi(url) {
 
       return data;
     } catch (error) {
-      gallery.innerHTML = `<p class="Warning-text"> <span class="warning-red">Warning :</span> Looks like Api Requests have reached to end for this hour .Try after  few hours.
+      gallery.innerHTML = `<p class="Warning-text"> <span class="warning-red">Warning :</span> please refresh this page.<br />.
              <br/><p>`;
     }
   }
@@ -285,3 +285,6 @@ function generatePicturesFromLocal() {
     <br> please go to gallary and like photos to see here. <br> Thank you 😎  `;
   }
 }
+
+
+// image hover effect
