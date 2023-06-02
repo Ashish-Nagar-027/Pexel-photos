@@ -10,6 +10,14 @@ const homeTab = document.querySelector(".home-button");
 const favoritesNum = document.querySelector(".fav-num");
 const yourFavoritesNav = document.querySelector(".your-favorite");
 const favoriteWarning = document.querySelector(".fav-add-removed-warning");
+const imgModal = document.querySelector(".img-details-modal");
+const imgDiv = document.querySelector(".image-div");
+const downloadBtn = document.querySelector(".download-btn");
+const imageInModal = document.querySelector(".img-modal-bottom");
+const prevImageBtn = document.getElementById('prev-btn')
+const nextImageBtn = document.getElementById('next-btn')
+
+
 let favorite = [];
 
 let FavTab = false;
@@ -18,9 +26,52 @@ let searchValue;
 let page = 1;
 let fetchLink;
 let loading;
+let imagesData
+let currentImageIndex
+
+//================================
+//       image modal
+//================================
+
+function addModalImage() {
+  imageInModal.innerHTML = `<img src=${FavTab ? imagesData[currentImageIndex].largePhoto :imagesData[currentImageIndex].src.large }>`
+}
+const imageModalHandler = (index)=> {
+  currentImageIndex = index
+  imgModal.classList.toggle('open-modal')
+  addModalImage()
+}
+
+imgModal.addEventListener('click', (e) => {
+  if(e.target.classList.contains('img-details-modal') || e.target.classList.contains('fa-circle-xmark') ){
+    imgModal.classList.remove('open-modal')
+  }
+})
+
+nextImageBtn.addEventListener('click', ()=> {
+
+  if(currentImageIndex < imagesData.length-1) {
+    currentImageIndex++;
+   addModalImage()
+  }
+ 
+})
+
+prevImageBtn.addEventListener('click', ()=> {
+
+  if(currentImageIndex > 0) {
+    currentImageIndex--;
+    addModalImage()
+  }
+ 
+})
+
+downloadBtn.addEventListener('click', ()=> {
+  window.open(imagesData[currentImageIndex].src.original)
+})
+
 
 // Top tab buttons {home and favorites}
-
 yourFavoritesNav.addEventListener("click", (e) => {
   if (e.target.textContent === "Home") {
     FavTab = false;
@@ -135,7 +186,8 @@ function generatePictures(data) {
   // updating favorites
   getFromLocal();
   getFavNumber()
-  data.photos.forEach((photo) => {
+  imagesData = data.photos
+  data.photos.map((photo,index) => {
     // checking favorite
     function addFavoriteClass() {
       if (favorite.length > 0) {
@@ -160,7 +212,7 @@ function generatePictures(data) {
         <a href=${photo.src.original}>Download</a>
         </div>
         <div class='image-div'>
-        <img src="${photo.src.large}" alt="" />
+        <img src="${photo.src.large}" alt="" onClick="imageModalHandler('${index}')" />
         <i class="${addFavoriteClass()}" onclick="addFav(event,'${
       photo.src.original
     }','${photo.src.large}','${photo.photographer}')" ></i>
@@ -186,7 +238,7 @@ async function searchPhotos(query) {
 
 function clear() {
   gallery.innerHTML = "";
-  // searchInput.value = ''
+
 }
 
 async function loadMore() {
@@ -260,9 +312,12 @@ const addFav = (event, originalPhoto, largePhoto, photographer) => {
     let indexItem = favorite.findIndex(
       (photoValues) => photoValues.originalPhoto === originalPhoto
     );
-    showFavWarning('Will be Removed !')
+    showFavWarning('Removed !')
     favorite.splice(indexItem, 1);
     saveToLocal();
+    if(FavTab){
+      generatePicturesFromLocal()
+    }
   }
 };
 
@@ -273,8 +328,9 @@ function generatePicturesFromLocal() {
   // updating favorites
   getFromLocal();
   getFavNumber()
+  imagesData = favorite
   if (favorite.length > 0) {
-    favorite.forEach((photo) => {
+    favorite.map((photo,index) => {
       const galleryImg = document.createElement("div");
       galleryImg.classList.add("gallery-img");
       galleryImg.innerHTML = `
@@ -283,7 +339,7 @@ function generatePicturesFromLocal() {
         <a href=${photo.originalPhoto}>Download</a>
         </div>
         <div class='image-div'>
-        <img src="${photo.largePhoto}" alt="" />
+        <img src="${photo.largePhoto}" alt="" onClick="imageModalHandler('${index}')" />
         <i class="fa-heart fa-solid" onclick="addFav(event,'${photo.originalPhoto}','${photo.largePhoto}','${photo.photographer}')" ></i>
         </div>
         `;
@@ -307,3 +363,4 @@ function showFavWarning(addedOrRemoved) {
     favoriteWarning.style.display = 'none'
   }, 1000);
 }
+

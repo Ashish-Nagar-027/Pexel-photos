@@ -119,9 +119,9 @@ nav {
     color: var(--input-font-color);
 }
 
-.search-form button {
+ button {
     border: none;
-    padding: 0.5rem;
+    padding: 0.3rem;
     font-size: 1rem;
     background-color:var(--btn-background) ;
     cursor: pointer;
@@ -155,8 +155,8 @@ nav {
     display: flex;
     justify-content: center;
     align-items: center;
-
 }
+
 .your-favorite div span:hover {
     text-decoration: underline;
 }
@@ -181,12 +181,14 @@ nav {
     margin: auto;
     row-gap: 3rem;
     column-gap: 2rem;
+    position: relative;
 }
 
 .gallery-img img {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    cursor: pointer;
 }
 
 
@@ -269,6 +271,74 @@ nav {
    background-color: var(--h1-title-color);
    color: var( --body-background);
    display: none;
+}
+
+.img-details-modal{
+ position: fixed;
+font-size: 2rem;
+background-color: var(--h1-title-color);
+color: var( --body-background);
+top: 0;
+left: 0;
+width: 100%;
+height: 100%;
+display: none;
+background: rgba(128, 128, 128, 0.055);
+color: red;
+z-index: -10;
+visibility: hidden;
+transition: all 0.5s ease-in-out;
+
+}   
+
+.open-modal {
+    visibility: visible;
+    z-index: 10;
+    display: grid;
+    place-items: center;
+}
+
+.img-modal {
+    width: 80%;
+    height: 80%;
+    background: var(--body-background);
+    padding: 1rem;
+    position: relative;
+}
+.img-modal-top{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.fa-circle-xmark {
+    cursor: pointer;
+    color: var(--btn-background);
+}
+
+.img-modal-bottom{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 0.5rem;
+    height: 80%;
+}
+
+.img-modal-bottom img{
+    height: 100%;
+    width: 280px;
+    max-height: 300px;
+}
+
+.img-modal-last {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.img-modal-last .btn{
+       width: 75px;
+       height: 35px;
 }
 
 @media screen  and (max-width : 450px){
