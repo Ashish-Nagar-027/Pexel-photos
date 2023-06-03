@@ -33,45 +33,51 @@ let currentImageIndex
 //       image modal
 //================================
 
+// add image in modal
 function addModalImage() {
   imageInModal.innerHTML = `<img src=${FavTab ? imagesData[currentImageIndex].largePhoto :imagesData[currentImageIndex].src.large }>`
 }
+
+// show modal
 const imageModalHandler = (index)=> {
   currentImageIndex = index
   imgModal.classList.toggle('open-modal')
   addModalImage()
 }
 
+// close modal
 imgModal.addEventListener('click', (e) => {
   if(e.target.classList.contains('img-details-modal') || e.target.classList.contains('fa-circle-xmark') ){
     imgModal.classList.remove('open-modal')
   }
 })
 
+// modal next button
 nextImageBtn.addEventListener('click', ()=> {
-
   if(currentImageIndex < imagesData.length-1) {
     currentImageIndex++;
    addModalImage()
   }
- 
 })
 
+// modal previous
 prevImageBtn.addEventListener('click', ()=> {
-
   if(currentImageIndex > 0) {
     currentImageIndex--;
     addModalImage()
   }
- 
 })
 
+// modal img download button
 downloadBtn.addEventListener('click', ()=> {
+  FavTab ?  window.open(imagesData[currentImageIndex].originalPhoto) :
   window.open(imagesData[currentImageIndex].src.original)
 })
 
+//==========================================
+//   Top tab buttons {home and favorites}
+//==========================================
 
-// Top tab buttons {home and favorites}
 yourFavoritesNav.addEventListener("click", (e) => {
   if (e.target.textContent === "Home") {
     FavTab = false;
@@ -81,6 +87,7 @@ yourFavoritesNav.addEventListener("click", (e) => {
       clear();
       curatedPhotos();
       more.style.display = "flex";
+      if(searchInput.value !== '') searchInput.value = ""
     }
   }
   if (e.target.textContent === `Favorites  ( ${favorite.length} )`) {
@@ -93,18 +100,25 @@ yourFavoritesNav.addEventListener("click", (e) => {
   }
 });
 
-// logo link
+//==========================================
+//             logo link
+//==========================================
 const myLogo = document.querySelector(".logo-img");
 myLogo.addEventListener("click", () => {
   window.open("https://ashish-nagar.netlify.app/", "_blank");
 });
+
 // logo link
 const mainLogo = document.querySelector(".title-logo-text");
 mainLogo.addEventListener("click", () => {
   window.open("./", "_self");
 });
 
-// light dark mode
+
+//==========================================
+//           light dark mode
+//==========================================
+      
 mode.addEventListener("click", (e) => {
   if (e.currentTarget.classList.contains("enable-dark-mode")) {
     myLogo.src = "./Logo/png/blue theme.png";
@@ -117,23 +131,37 @@ mode.addEventListener("click", (e) => {
   }
 });
 
+
 // Event Listners
+//==========================================
+//         search image
+//==========================================
 searchInput.addEventListener("input", updateInput);
+
+function updateInput(e) {
+  searchValue = e.target.value;
+}
 
 form.addEventListener("submit", (e) => {
   e.preventDefault();
   searchPhotos(searchValue);
 });
 
-// load button
-more.addEventListener("click", loadMore);
-
-//
-function updateInput(e) {
-  searchValue = e.target.value;
+// handling search api
+async function searchPhotos(query) {
+  clear();
+  fetchLink = `https://api.pexels.com/v1/search?query=${query}&per_page=8`;
+  const data = await fetchApi(fetchLink);
+  generatePictures(data);
 }
 
-// fetching data from api
+
+
+
+
+//==========================================
+//         fetching data from api
+//==========================================
 async function fetchApi(url) {
   // fetching  data text ...
   loading = document.createElement("div");
@@ -180,13 +208,15 @@ async function fetchApi(url) {
   }
 }
 
-// generate photos,and data  from api data
 
+//==========================================
+//  generate photos,and data  from api data
+//==========================================
 function generatePictures(data) {
   // updating favorites
   getFromLocal();
   getFavNumber()
-  imagesData = data.photos
+  imagesData = data?.photos
   data.photos.map((photo,index) => {
     // checking favorite
     function addFavoriteClass() {
@@ -228,18 +258,17 @@ async function curatedPhotos() {
   generatePictures(data);
 }
 
-// handling search api
-async function searchPhotos(query) {
-  clear();
-  fetchLink = `https://api.pexels.com/v1/search?query=${query}&per_page=8`;
-  const data = await fetchApi(fetchLink);
-  generatePictures(data);
-}
+
 
 function clear() {
   gallery.innerHTML = "";
-
 }
+
+//==========================================
+//         load more images
+//==========================================
+// load button
+more.addEventListener("click", loadMore);
 
 async function loadMore() {
   page++;
@@ -255,7 +284,10 @@ async function loadMore() {
 
 curatedPhotos();
 
-// ityped library
+
+//==========================================
+//            ityped library
+//==========================================
 window.ityped.init(document.querySelector(".search-input"), {
   strings: [
     "Search here . . .",
@@ -272,7 +304,6 @@ window.ityped.init(document.querySelector(".search-input"), {
 
 //  save to favorite function
 // favorites
-
 let saveToLocal = () => {
   localStorage.setItem("favorite", JSON.stringify(favorite));
   getFavNumber()
@@ -355,7 +386,7 @@ function getFavNumber() {
   favoritesNum.innerHTML = `<p>( ${favorite.length} )</P>`
 }
 
-// showing warning
+// showing warning 
 function showFavWarning(addedOrRemoved) {
   favoriteWarning.style.display = 'flex'
   favoriteWarning.textContent = addedOrRemoved;
