@@ -14,6 +14,8 @@ const imgModal = document.querySelector(".img-details-modal");
 const imgDiv = document.querySelector(".image-div");
 const downloadBtn = document.querySelector(".download-btn");
 const imageInModal = document.querySelector(".img-modal-bottom");
+const photographerNameInModel = document.querySelector(".photographer-name");
+
 const prevImageBtn = document.getElementById('prev-btn')
 const nextImageBtn = document.getElementById('next-btn')
 
@@ -35,7 +37,28 @@ let currentImageIndex
 
 // add image in modal
 function addModalImage() {
+  
+   // checking favorite
+   function addFavoriteClass() {
+    if (favorite.length > 0) {
+      if (
+        favorite.find(
+          (photoValues) => photoValues.originalPhoto === imagesData[currentImageIndex].src.original
+        )
+      ) {
+        return "fa-heart fa-solid model-fav-icon";
+      }
+      return "fa-heart fa-regular model-fav-icon";
+    } else {
+      return "fa-heart fa-regular model-fav-icon";
+    }
+  }
+ 
+  
+
   imageInModal.innerHTML = `<img src=${FavTab ? imagesData[currentImageIndex].largePhoto :imagesData[currentImageIndex].src.large }>`
+  photographerNameInModel.innerHTML = `<p>Photographer : ${imagesData[currentImageIndex].photographer}</p>`
+
 }
 
 // show modal
@@ -219,6 +242,8 @@ function generatePictures(data) {
   imagesData = data?.photos
   data.photos.map((photo,index) => {
     // checking favorite
+   
+   
     function addFavoriteClass() {
       if (favorite.length > 0) {
         if (
@@ -232,13 +257,22 @@ function generatePictures(data) {
       } else {
         return "fa-heart fa-regular";
       }
+      
+    }
+
+    /// handle if photographer has big name
+    let photographer = function handleName(){
+      if(photo.photographer.length > 16) {
+       return photo.photographer.slice(0,16) + '...'
+      }
+      return photo.photographer
     }
 
     const galleryImg = document.createElement("div");
     galleryImg.classList.add("gallery-img");
     galleryImg.innerHTML = `
         <div class="gallery-info">
-        <p>${photo.photographer}</p>
+        <p class="photographer-title">${photographer()}</p>
         <a href=${photo.src.original}>Download</a>
         </div>
         <div class='image-div'>
@@ -323,11 +357,14 @@ const addFav = (event, originalPhoto, largePhoto, photographer) => {
     originalPhoto,
     largePhoto,
     photographer,
+   
   };
+
 
   //
   if (event.target.classList.contains("fa-regular")) {
     event.target.classList.replace("fa-regular", "fa-solid");
+    
     showFavWarning('Added !')
   //  checking if already availabe
     if (
@@ -335,16 +372,22 @@ const addFav = (event, originalPhoto, largePhoto, photographer) => {
         (photoValues) => photoValues.originalPhoto === originalPhoto
       )
     ) {
+     
+     
       favorite.push(photoDetails);
       saveToLocal();
     }
   } else {
     event.target.classList.replace("fa-solid", "fa-regular");
+    
     let indexItem = favorite.findIndex(
       (photoValues) => photoValues.originalPhoto === originalPhoto
     );
+    favorite[indexItem].inFav = false
+   
     showFavWarning('Removed !')
     favorite.splice(indexItem, 1);
+    
     saveToLocal();
     if(FavTab){
       generatePicturesFromLocal()
@@ -392,6 +435,6 @@ function showFavWarning(addedOrRemoved) {
   favoriteWarning.textContent = addedOrRemoved;
   setTimeout(() => {
     favoriteWarning.style.display = 'none'
-  }, 1000);
+  }, 1500);
 }
 
