@@ -30,6 +30,8 @@ let fetchLink;
 let loading;
 let imagesData
 let currentImageIndex
+let allImagesArray = []
+
 
 //================================
 //       image modal
@@ -56,13 +58,17 @@ function addModalImage() {
  
   
 
-  imageInModal.innerHTML = `<img src=${FavTab ? imagesData[currentImageIndex].largePhoto :imagesData[currentImageIndex].src.large }>`
-  photographerNameInModel.innerHTML = `<p>Photographer : ${imagesData[currentImageIndex].photographer}</p>`
+  // imageInModal.innerHTML = `<img src=${FavTab ? imagesData[currentImageIndex].largePhoto :imagesData[currentImageIndex].src.large }>`
+  // photographerNameInModel.innerHTML = `<p>Photographer : ${imagesData[currentImageIndex].photographer}</p>`
+
+  imageInModal.innerHTML = `<img src=${FavTab ? allImagesArray[currentImageIndex].largePhoto :allImagesArray[currentImageIndex].src.large }>`
+  photographerNameInModel.innerHTML = `<p>Photographer : ${allImagesArray[currentImageIndex].photographer}</p>`
 
 }
 
 // show modal
 const imageModalHandler = (index)=> {
+
   currentImageIndex = index
   imgModal.classList.toggle('open-modal')
   addModalImage()
@@ -77,7 +83,7 @@ imgModal.addEventListener('click', (e) => {
 
 // modal next button
 nextImageBtn.addEventListener('click', ()=> {
-  if(currentImageIndex < imagesData.length-1) {
+  if(currentImageIndex < allImagesArray.length-1) {
     currentImageIndex++;
    addModalImage()
   }
@@ -235,15 +241,18 @@ async function fetchApi(url) {
 //==========================================
 //  generate photos,and data  from api data
 //==========================================
+let photoNum 
 function generatePictures(data) {
+  
+   allImagesArray = [...allImagesArray, ...data.photos]
+  // allImagesArray.push(...data.photos)
+
   // updating favorites
   getFromLocal();
   getFavNumber()
   imagesData = data?.photos
+  photoNum = photoNum === undefined ? 0 : photoNum+8 
   data.photos.map((photo,index) => {
-    // checking favorite
-   
-   
     function addFavoriteClass() {
       if (favorite.length > 0) {
         if (
@@ -268,6 +277,7 @@ function generatePictures(data) {
       return photo.photographer
     }
 
+
     const galleryImg = document.createElement("div");
     galleryImg.classList.add("gallery-img");
     galleryImg.innerHTML = `
@@ -276,7 +286,7 @@ function generatePictures(data) {
         <a href=${photo.src.original}>Download</a>
         </div>
         <div class='image-div'>
-        <img src="${photo.src.large}" alt="" onClick="imageModalHandler('${index}')" />
+        <img src="${photo.src.large}" alt="" onClick="imageModalHandler('${index+photoNum}')" />
         <i class="${addFavoriteClass()}" onclick="addFav(event,'${
       photo.src.original
     }','${photo.src.large}','${photo.photographer}')" ></i>
