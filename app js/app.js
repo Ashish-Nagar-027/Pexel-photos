@@ -31,6 +31,7 @@ let loading;
 let imagesData
 let currentImageIndex
 let allImagesArray = []
+let photoNum 
 
 
 //================================
@@ -55,11 +56,6 @@ function addModalImage() {
       return "fa-heart fa-regular model-fav-icon";
     }
   }
- 
-  
-
-  // imageInModal.innerHTML = `<img src=${FavTab ? imagesData[currentImageIndex].largePhoto :imagesData[currentImageIndex].src.large }>`
-  // photographerNameInModel.innerHTML = `<p>Photographer : ${imagesData[currentImageIndex].photographer}</p>`
 
   imageInModal.innerHTML = `<img src=${FavTab ? allImagesArray[currentImageIndex].largePhoto :allImagesArray[currentImageIndex].src.large }>`
   photographerNameInModel.innerHTML = `<p>Photographer : ${allImagesArray[currentImageIndex].photographer}</p>`
@@ -113,8 +109,10 @@ yourFavoritesNav.addEventListener("click", (e) => {
     if (!FavTab) {
       homeTab.style.backgroundColor = "var(--hover-color)";
       yourFav.style.backgroundColor = "inherit";
+      allImagesArray.length = 0
       clear();
       curatedPhotos();
+      generatePictures(allImagesArray)
       more.style.display = "flex";
       if(searchInput.value !== '') searchInput.value = ""
     }
@@ -241,18 +239,11 @@ async function fetchApi(url) {
 //==========================================
 //  generate photos,and data  from api data
 //==========================================
-let photoNum 
-function generatePictures(data) {
-  
-   allImagesArray = [...allImagesArray, ...data.photos]
-  // allImagesArray.push(...data.photos)
 
-  // updating favorites
-  getFromLocal();
-  getFavNumber()
-  imagesData = data?.photos
-  photoNum = photoNum === undefined ? 0 : photoNum+8 
-  data.photos.map((photo,index) => {
+function generatePictures(data) {
+
+ let photoGenerator = (photosData) => {
+     photosData.map((photo,index) => {
     function addFavoriteClass() {
       if (favorite.length > 0) {
         if (
@@ -276,8 +267,7 @@ function generatePictures(data) {
       }
       return photo.photographer
     }
-
-
+    
     const galleryImg = document.createElement("div");
     galleryImg.classList.add("gallery-img");
     galleryImg.innerHTML = `
@@ -293,7 +283,27 @@ function generatePictures(data) {
         </div>
         `;
     gallery.appendChild(galleryImg);
-  });
+  
+  })
+  }
+  
+ if(Array.isArray(data.photos)) {
+  
+  // updating favorites
+  getFromLocal();
+  getFavNumber()
+  imagesData = data?.photos
+  photoNum = photoNum === undefined ? 0 : photoNum+8 
+   if(data?.photos?.length === 0) {
+       gallery.innerHTML = `<p class="Warning-text"> <span class="warning-red">Empty :</span> No images with ${searchValue} <br> click on Home 😎  `;
+       searchValue = ""
+       photoNum = undefined
+    }
+    else {
+    allImagesArray = [...allImagesArray, ...data.photos]
+   photoGenerator(data.photos)
+  }
+}
 }
 
 async function curatedPhotos() {
