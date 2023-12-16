@@ -95,8 +95,8 @@ prevImageBtn.addEventListener('click', ()=> {
 
 // modal img download button
 downloadBtn.addEventListener('click', ()=> {
-  FavTab ?  window.open(imagesData[currentImageIndex].originalPhoto) :
-  window.open(imagesData[currentImageIndex].src.original)
+  FavTab ?  window.open(allImagesArray[currentImageIndex].originalPhoto) :
+  window.open(allImagesArray[currentImageIndex].src.original)
 })
 
 //==========================================
